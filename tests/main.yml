@@ -8,6 +8,7 @@
       docker_presets_images_json_query: >-
         [? starts_with(name, `centos-6`)
            || starts_with(name, `centos-7`)
+           || starts_with(name, `debian-9`)
            || starts_with(name, `fedora-27`)
            || starts_with(name, `fedora-28`) ]
 
@@ -23,6 +24,7 @@
     - role: amtega.check_platform
       check_platform_distributions:
         centos: 6
+        debian: 9
         rhel: 6
         fedora: 27
       check_platform_variables:

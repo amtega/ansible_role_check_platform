@@ -9,10 +9,7 @@
 #   <distributionN>: <minimum version>
 # }
 
-check_platform_distributions:
-  centos: 6
-  rhel: 6
-  fedora: 27
+check_platform_distributions: []
 
 # List of strings with the variable names that must be defined
 
