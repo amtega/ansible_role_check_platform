@@ -9,17 +9,9 @@ galaxy_info:
   license: GPLv3 or EUPL
   min_ansible_version: 2.7
   platforms:
-  - name: Debian
-    versions:
-      - 9
-  - name: EL
-    versions:
-      - 6
-      - 7
-  - name: Fedora
-    versions:
-      - 27
-      - 28
+    - name: GenericLinux
+      versions:
+        - all
   galaxy_tags:
     - os
     - check
