@@ -9,7 +9,7 @@
 #   <distributionN>: <minimum version>
 # }
 
-check_platform_distributions: []
+check_platform_distributions: {}
 
 # List of strings with the variable names that must be defined
 
