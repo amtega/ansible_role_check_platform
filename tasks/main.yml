@@ -15,7 +15,10 @@
           assert:
             that: >-
               distribution
-              in check_platform_distributions.keys() | map("lower") | list
+              in check_platform_distributions.keys()
+                 | list
+                 | map("lower")
+                 | list
             msg: "{{ distribution }} distribution is not supported"
 
         - name: assert distribution version is supported
