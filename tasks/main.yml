@@ -29,6 +29,7 @@
             msg: >-
               {{ distribution }} distribution
               version {{ ansible_facts.distribution_version }} is not supported
+      when: check_platform_distributions.keys() | list | length > 0
       vars:
         distribution: "{{ ansible_facts.distribution | lower }}"
 
