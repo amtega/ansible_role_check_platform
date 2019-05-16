@@ -1,7 +1,7 @@
 ---
 # Tasks for testing role
 
-- name: run idempotence test
+- name: Run idempotence test
   hosts: localhost
   roles:
     - role: amtega.docker_presets
@@ -18,7 +18,7 @@
   tags:
     - sandbox
 
-- name: test basic tomcat provisioning with cluster
+- name: Test basic tomcat provisioning with cluster
   hosts: docker_sandbox_containers
   roles:
     - role: amtega.check_platform
@@ -32,7 +32,7 @@
   tags:
     - idempotence
 
-- name: cleanup docker sandbox
+- name: Cleanup docker sandbox
   hosts: localhost
   roles:
     - role: amtega.docker_sandbox
