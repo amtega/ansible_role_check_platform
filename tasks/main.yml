@@ -2,6 +2,10 @@
 # Role tasks
 
 - block:
+    - name: Gather facts
+      setup:
+      when: ansible_facts.keys() | list | length == 0
+
     - name: Generate undefined value place holder
       set_fact:
         check_platform_undefined_place_holder: >-
