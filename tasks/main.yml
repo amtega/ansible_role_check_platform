@@ -13,6 +13,7 @@
              + (99999999999999999999999999999999999999999999999999
                 | random
                 | to_uuid) }}
+      when: check_platform_undefined_place_holder is undefined
 
     - block:
         - name: Assert distribution is supported
