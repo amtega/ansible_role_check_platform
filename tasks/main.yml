@@ -20,10 +20,7 @@
           assert:
             that: >-
               distribution
-              in check_platform_distributions.keys()
-                 | list
-                 | map("lower")
-                 | list
+              in required_distributions_with_aliases
             msg: "{{ distribution }} distribution is not supported"
 
         - name: Assert distribution version is supported
@@ -37,6 +34,15 @@
       when: check_platform_distributions.keys() | list | length > 0
       vars:
         distribution: "{{ ansible_facts.distribution | lower }}"
+        required_distributions: >-
+          {{ check_platform_distributions.keys()
+             | list
+             | map("lower")
+             | list }}
+        required_distributions_with_aliases: >-
+          {{ required_distributions
+             +
+            ("rhel" in required_distributions) | ternary(["redhat"], []) }}
 
     - name: Assert required variables are defined
       assert:
