@@ -14,3 +14,9 @@ check_platform_distributions: {}
 # List of strings with the variable names that must be defined
 
 check_plaform_variables: []
+
+# Dict with distribution aliases. Before comparing ansible_facts distribution
+# name against the required distribution, this map will be applied.
+
+check_platform_aliases:
+  redhat: rhel

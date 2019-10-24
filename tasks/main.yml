@@ -19,30 +19,30 @@
         - name: Assert distribution is supported
           assert:
             that: >-
-              distribution
-              in required_distributions_with_aliases
+              distribution_alias
+              in required_distributions_names
             msg: "{{ distribution }} distribution is not supported"
 
         - name: Assert distribution version is supported
           assert:
             that: >-
               ansible_facts.distribution_version
-              is version(check_platform_distributions[distribution], ">=")
+              is version(check_platform_distributions[distribution_alias], ">=")
             msg: >-
               {{ distribution }} distribution
               version {{ ansible_facts.distribution_version }} is not supported
       when: check_platform_distributions.keys() | list | length > 0
       vars:
         distribution: "{{ ansible_facts.distribution | lower }}"
-        required_distributions: >-
+
+        distribution_alias: >-
+          {{ check_platform_aliases[distribution] | default(distribution) }}
+
+        required_distributions_names: >-
           {{ check_platform_distributions.keys()
              | list
              | map("lower")
              | list }}
-        required_distributions_with_aliases: >-
-          {{ required_distributions
-             +
-            ("rhel" in required_distributions) | ternary(["redhat"], []) }}
 
     - name: Assert required variables are defined
       assert:
