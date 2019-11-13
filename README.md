@@ -26,7 +26,7 @@ This is an example playbook:
     - role: amtega.check_platform
       check_platform_distributions:
         centos: 6
-        rhel: 7
+        redhat: 7
         fedora: 27
       check_platform_variables:
         - myvar1
