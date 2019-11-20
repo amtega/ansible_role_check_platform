@@ -19,15 +19,17 @@
         - name: Assert distribution is supported
           assert:
             that: >-
-              distribution_alias
-              in required_distributions_names
+              distribution in required_distributions_names
+              or distribution_alias in required_distributions_names
             msg: "{{ distribution }} distribution is not supported"
 
         - name: Assert distribution version is supported
           assert:
             that: >-
               ansible_facts.distribution_version
-              is version(check_platform_distributions[distribution_alias], ">=")
+              is version(check_platform_distributions[distribution] | default(""), ">=")
+              or ansible_facts.distribution_version
+              is version(check_platform_distributions[distribution_alias] | default(""), ">=")
             msg: >-
               {{ distribution }} distribution
               version {{ ansible_facts.distribution_version }} is not supported
