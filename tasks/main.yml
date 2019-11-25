@@ -24,12 +24,13 @@
             msg: "{{ distribution }} distribution is not supported"
 
         - name: Assert distribution version is supported
+          # Suppose no version exists >= 2**1024
           assert:
             that: >-
               ansible_facts.distribution_version
-              is version(check_platform_distributions[distribution] | default(""), ">=")
+              is version(check_platform_distributions[distribution] | default(2**1024), ">=")
               or ansible_facts.distribution_version
-              is version(check_platform_distributions[distribution_alias] | default(""), ">=")
+              is version(check_platform_distributions[distribution_alias] | default(2**1024), ">=")
             msg: >-
               {{ distribution }} distribution
               version {{ ansible_facts.distribution_version }} is not supported
