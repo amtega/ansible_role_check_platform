@@ -2,65 +2,14 @@
 # Role tasks
 
 - block:
-    - name: Gather facts
-      setup:
-      when: ansible_facts.keys() | list | length == 0
-
-    - name: Generate undefined value place holder
-      set_fact:
-        check_platform_undefined_place_holder: >-
-          {{ "__check_platform_undefined_place_holder__"
-             + (99999999999999999999999999999999999999999999999999
-                | random
-                | to_uuid) }}
-      when: check_platform_undefined_place_holder is undefined
-
-    - block:
-        - name: Assert distribution is supported
-          assert:
-            that: >-
-              distribution in required_distributions_names
-              or distribution_alias in required_distributions_names
-            msg: "{{ distribution }} distribution is not supported"
-
-        - name: Assert distribution version is supported
-          # Suppose no version exists >= 2**1024
-          assert:
-            that: >-
-              ansible_facts.distribution_version
-              is version(check_platform_distributions[distribution] | default(2**1024), ">=")
-              or ansible_facts.distribution_version
-              is version(check_platform_distributions[distribution_alias] | default(2**1024), ">=")
-            msg: >-
-              {{ distribution }} distribution
-              version {{ ansible_facts.distribution_version }} is not supported
-      when: check_platform_distributions.keys() | list | length > 0
-      vars:
-        distribution: "{{ ansible_facts.distribution | lower }}"
-
-        distribution_alias: >-
-          {{ check_platform_aliases[distribution] | default(distribution) }}
-
-        required_distributions_names: >-
-          {{ check_platform_distributions.keys()
-             | list
-             | map("lower")
-             | list }}
-
-    - name: Assert required variables are defined
-      assert:
-        that:
-          - value != check_platform_undefined_place_holder
-          - value is not none
-        msg: "required variable {{ check_platform_variable }} is missing"
-      loop: "{{ check_plaform_variables }}"
-      loop_control:
-        loop_var: check_platform_variable
-        label: "{{ check_platform_variable }}"
-      vars:
-        value: >-
-          {{ lookup('vars',
-                    check_platform_variable,
-                    default=check_platform_undefined_place_holder) }}
+    - include_tasks: check.yml
+      when: >-
+        lookup("dict", check_platform_distributions | default({}))
+        | union(check_platform_checked_distributions | default([]))
+        != check_platform_checked_distributions | default([])
+        or
+        check_platform_variables | default([])
+        | union(check_platform_checked_variables | default([]))
+        != check_platform_checked_variables | default([])
   tags:
     - role::check_platform

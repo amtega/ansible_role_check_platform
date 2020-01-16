@@ -1,0 +1,46 @@
+---
+# Distribution check tasks
+
+- block:
+    - name: Assert distribution is supported
+      assert:
+        that: >-
+          distribution in required_distributions_names
+          or distribution_alias in required_distributions_names
+        msg: "{{ distribution }} distribution is not supported"
+
+    - name: Assert distribution version is supported
+      # Suppose no version exists >= 2**1024
+      assert:
+        that: >-
+          ansible_facts.distribution_version
+          is version(check_platform_distributions[distribution]
+                     | default(2**1024),
+                     ">=")
+          or ansible_facts.distribution_version
+          is version(check_platform_distributions[distribution_alias]
+                     | default(2**1024),
+                     ">=")
+        msg: >-
+          {{ distribution }} distribution
+          version {{ ansible_facts.distribution_version }} is not supported
+
+    - name: Setup fact with checked distributions
+      set_fact:
+        check_platform_checked_distributions: >-
+          {{ (check_platform_checked_distributions | default([])
+              + lookup("dict", check_platform_distributions))
+             | unique }}
+
+  when: check_platform_distributions.keys() | list | length > 0
+  vars:
+    distribution: "{{ ansible_facts.distribution | lower }}"
+
+    distribution_alias: >-
+      {{ check_platform_aliases[distribution] | default(distribution) }}
+
+    required_distributions_names: >-
+      {{ check_platform_distributions.keys()
+         | list
+         | map("lower")
+         | list }}

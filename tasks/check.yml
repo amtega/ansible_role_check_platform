@@ -1,0 +1,7 @@
+---
+# Check tasks
+
+- include_tasks: facts.yml
+- include_tasks: placeholder.yml
+- include_tasks: distribution.yml
+- include_tasks: variables.yml
