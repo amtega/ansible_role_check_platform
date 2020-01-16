@@ -5,6 +5,7 @@
     - include_tasks: check.yml
       when: >-
         lookup("dict", check_platform_distributions | default({}))
+        | list
         | union(check_platform_checked_distributions | default([]))
         != check_platform_checked_distributions | default([])
         or
