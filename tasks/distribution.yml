@@ -29,7 +29,7 @@
       set_fact:
         check_platform_checked_distributions: >-
           {{ (check_platform_checked_distributions | default([])
-              + lookup("dict", check_platform_distributions))
+              + lookup("dict", check_platform_distributions) | list)
              | unique }}
 
   when: check_platform_distributions.keys() | list | length > 0
