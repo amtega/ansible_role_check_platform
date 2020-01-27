@@ -3,4 +3,4 @@
 
 - name: Gather facts
   setup:
-  when: ansible_facts.keys() | list | length == 0
+  when: ansible_facts.keys() | list | length <= 1
