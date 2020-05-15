@@ -1,13 +1,15 @@
 ---
 # Variables check tasks
 
+- include_tasks: placeholder.yml
+
 - name: Assert required variables are defined
   assert:
     that:
       - value != check_platform_undefined_place_holder
       - value is not none
     msg: "required variable {{ check_platform_variable }} is missing"
-  loop: "{{ check_plaform_variables }}"
+  loop: "{{ check_platform_variables }}"
   loop_control:
     loop_var: check_platform_variable
     label: "{{ check_platform_variable }}"
@@ -21,6 +23,6 @@
   set_fact:
     check_platform_checked_variables: >-
       {{ (check_platform_checked_variables | default([])
-          + [ check_plaform_variables ])
+          + check_platform_variables)
          | unique }}
-  when: check_plaform_variables | length > 0
+  when: check_platform_variables | length > 0

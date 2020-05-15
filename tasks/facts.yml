@@ -1,6 +1,0 @@
----
-# Gather facts tasks
-
-- name: Gather facts
-  setup:
-  when: ansible_facts.keys() | list | length <= 1
