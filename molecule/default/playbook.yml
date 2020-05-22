@@ -1,0 +1,14 @@
+---
+
+- name: Converge
+  hosts: molecule_hosts
+  gather_facts: no
+  roles:
+    - role: amtega.check_platform
+      check_platform_distributions:
+        centos: 6
+        debian: 9
+        redhat: 6
+        fedora: 27
+      check_platform_variables:
+        - check_platform_distributions
