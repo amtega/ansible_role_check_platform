@@ -1,29 +1,7 @@
 ---
 # Role tasks
 
-- name: Gather facts
-  setup:
-  when: ansible_facts.keys() | list | length <= 1
-  tags:
-    - role::check_platform
-
-- block:
-    - include_tasks: distribution.yml
-      when: check_platform_distribution_required
-
-    - include_tasks: variables.yml
-      when: check_platform_variables_required
-  vars:
-    check_platform_distribution_required: >-
-      {{ lookup("dict", check_platform_distributions | default({}))
-         | map("to_json")
-         | list
-         is not subset(check_platform_checked_distributions | default([])
-                       | map("to_json")
-                       | list) }}
-
-    check_platform_variables_required: >-
-      {{ check_platform_variables | default([])
-         is not subset(check_platform_checked_variables | default([])) }}
+- name: Check platform
+  _check_platform:
   tags:
     - role::check_platform
