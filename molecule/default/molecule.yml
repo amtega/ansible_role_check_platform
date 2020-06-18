@@ -52,14 +52,15 @@ provisioner:
       callback_whitelist: profile_tasks
       action_plugins: $PWD/action_plugins
   inventory:
-    group_vars:
+    hosts:
       molecule_hosts:
-        check_platform_distributions:
-          centos: 6
-          debian: 9
-          redhat: 6
-          fedora: 27
-        check_platform_variables:
-          - check_platform_distributions
+        vars:
+          check_platform_distributions:
+            centos: 6
+            debian: 9
+            redhat: 6
+            fedora: 27
+          check_platform_variables:
+            - check_platform_distributions
 verifier:
   name: ansible
