@@ -72,8 +72,12 @@ class ActionModule(ActionBase):
             result = self._execute_module(module_name="setup",
                                           module_args=dict(),
                                           task_vars=self.__task_vars)
-            self.__ansible_facts = result["ansible_facts"]
-            self.__ansible_facts_gathered = True
+            if "failed" not in result.keys():
+                self.__ansible_facts = result["ansible_facts"]
+                self.__ansible_facts_gathered = True
+            else:
+                raise AnsibleError("Unable to gather facts: {m}"
+                                   .format(d=result["module_stderr"]))
 
     def _gather_distribution_info(self):
         """Gather distribution info"""
