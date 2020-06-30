@@ -77,7 +77,7 @@ class ActionModule(ActionBase):
                 self.__ansible_facts_gathered = True
             else:
                 raise AnsibleError("Unable to gather facts: {m}"
-                                   .format(d=result["module_stderr"]))
+                                   .format(m=result["module_stderr"]))
 
     def _gather_distribution_info(self):
         """Gather distribution info"""
@@ -90,7 +90,7 @@ class ActionModule(ActionBase):
             self.__platform_aliases.get(self.__distribution,
                                         self.__distribution)
         self.__distributions_names = \
-            (d.lower() for d in self.__distributions.keys())
+            list(d.lower() for d in self.__distributions.keys())
 
     def _check_distribution(self):
         """Check distribution"""
