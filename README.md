@@ -34,7 +34,7 @@ This is an example playbook:
 Tests are based on [molecule with docker containers](https://molecule.readthedocs.io/en/latest/installation.html).
 
 ```shell
-cd amtega.check_platform/tests
+cd amtega.check_platform
 
 molecule test
 ```
