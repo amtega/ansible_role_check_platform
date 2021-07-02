@@ -141,18 +141,21 @@ class ActionModule(ActionBase):
         self.__tmp = tmp
         self.__task_vars = task_vars
 
-        self._gather_role_vars()
-        self._gather_facts()
-        self._gather_distribution_info()
+        try:
+            self._gather_role_vars()
+            self._gather_facts()
+            self._gather_distribution_info()
 
-        if len(self.__distributions.keys()) > 0:
-            self._check_distribution()
+            if len(self.__distributions.keys()) > 0:
+                self._check_distribution()
 
-        if len(self.__variables) > 0:
-            self._check_variables()
+            if len(self.__variables) > 0:
+                self._check_variables()
 
-        ansible_facts = dict()
-        if self.__ansible_facts_gathered:
-            ansible_facts = self.__ansible_facts
+            ansible_facts = dict()
+            if self.__ansible_facts_gathered:
+                ansible_facts = self.__ansible_facts
+        finally:
+            self._remove_tmp_path(self._connection._shell.tmpdir)
 
         return dict(changed=False, ansible_facts=ansible_facts)
