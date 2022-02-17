@@ -19,7 +19,8 @@ check_platform_variables: []
 # name against the required distribution, this map will be applied.
 
 check_platform_aliases:
-  redhat: rhel
+  almalinux: centos
+  rocky: centos
 
 # Enable or disable platform check
 

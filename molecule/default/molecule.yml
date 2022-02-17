@@ -25,13 +25,21 @@ platforms:
     image: quay.io/centos/centos:stream8
     groups:
       - molecule_hosts
-  - name: "fedora33-${INSTANCE_UUID:-1}"
-    image: fedora:33
+  - name: "rocky8-${INSTANCE_UUID:-1}"
+    image: rockylinux:8
+    groups:
+      - molecule_hosts
+  - name: "alma8-${INSTANCE_UUID:-1}"
+    image: almalinux:8
+    groups:
+      - molecule_hosts
+  - name: "fedora34-${INSTANCE_UUID:-1}"
+    image: fedora:34
     groups:
       - molecule_hosts
       - molecule_hosts_fedora
-  - name: "fedora34-${INSTANCE_UUID:-1}"
-    image: quay.io/fedora/fedora:34
+  - name: "fedora35-${INSTANCE_UUID:-1}"
+    image: quay.io/fedora/fedora:35
     groups:
       - molecule_hosts
       - molecule_hosts_fedora
@@ -47,9 +55,8 @@ provisioner:
         vars:
           check_platform_distributions:
             centos: 6
-            debian: 9
-            redhat: 6
-            fedora: 27
+            redhapullt: 6
+            fedora: 34
           check_platform_variables:
             - check_platform_distributions
 verifier:
