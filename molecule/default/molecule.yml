@@ -55,7 +55,7 @@ provisioner:
         vars:
           check_platform_distributions:
             centos: 6
-            redhapullt: 6
+            redhat: 6
             fedora: 34
           check_platform_variables:
             - check_platform_distributions
