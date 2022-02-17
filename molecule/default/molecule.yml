@@ -34,7 +34,7 @@ platforms:
     groups:
       - molecule_hosts
   - name: "fedora34-${INSTANCE_UUID:-1}"
-    image: fedora:34
+    image: quay.io/fedora/fedora:34
     groups:
       - molecule_hosts
       - molecule_hosts_fedora
